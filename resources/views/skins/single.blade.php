@@ -14,15 +14,18 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
 
-                <div id="salegraph"></div>
+                <div id="salegraph" class="text-black dark:text-white"></div>
 
             </div>
         </div>
     </div>
 
+@push('scripts')
 <script>
-const saleHistory = {!! json_encode($saleHistory) !!}
+let saleHistory = {!! json_encode($saleHistory) !!}
 </script>
+@vite('resources/js/components/SaleHistoryGraph.js')
+@endpush
 </x-app-layout>
