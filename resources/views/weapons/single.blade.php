@@ -14,7 +14,7 @@
                         <input type="hidden" name="weapon_id" value="{{$weapon->id}}">
                         <p class="font-bold text-lg">Add new Skin</p>
                         <label>Name
-                            <input type="text" name="name">
+                            <input type="text" name="name" class="dark:bg-black">
                         </label>
                         <button type="submit">Submit</button>
                     </form>

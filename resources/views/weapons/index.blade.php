@@ -8,24 +8,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="text-gray-900 dark:text-gray-100">
 
                     @foreach ($weapons as $w)
-                        <div class="grid grid-cols-2">
+                        <div class="grid grid-cols-2 items-center odd:bg-gray-700 px-4 py-2">
                             <a href="/weapons/{{$w->id}}">{{$w->name}}</a>
-
-                            <form action="/weapons/{{$w->id}}" method="POST">
-                                @method('PUT')
-                                @csrf
-                                <select id="type" name="type">
-                                    <option value="" {{ $w->type == null ? 'selected' : ''}}>none</option>
-                                    @foreach ($types as $t)
-                                        <option value="{{$t}}" {{ $t == $w->type ? 'selected': ''}}>{{$t}}</option>
-                                    @endforeach
-                                </select>
-                                <button type="submit">send</button>
-                            </form>
-
+                            <x-forms.weapon-select :w="$w" :types="$types"/>
                         </div>
                     @endforeach
 
