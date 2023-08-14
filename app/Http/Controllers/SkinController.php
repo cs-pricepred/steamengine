@@ -45,7 +45,8 @@ class SkinController extends Controller {
         $skin = Skin::find($id);
         $weapon = Weapon::find($skin->weapon_id);
         $market_hash = $weapon->name . ' | ' . $skin->name . ' (' . $skin->wear . ')';
-        return view('skins.single', ['skin' => $skin, 'saleHistory'  => $this->saleHistory($market_hash), 'weapon' => $weapon]);
+        /* return view('skins.single', ['skin' => $skin, 'saleHistory'  => $this->saleHistory($market_hash), 'weapon' => $weapon]); */
+        return view('skins.single', ['skin' => $skin, 'saleHistory'  => $skin->historicSales()->get(), 'weapon' => $weapon]);
     }
 
     public function create(Request $request): Redirector|RedirectResponse {

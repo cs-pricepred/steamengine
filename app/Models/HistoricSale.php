@@ -6,19 +6,15 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Skin extends Model
+class HistoricSale extends Model
 {
     use HasFactory;
     use HasUuids;
 
-    public function weapon(): BelongsTo {
-        return $this->belongsTo(Weapon::class);
-    }
+    protected $fillable = ['time', 'price', 'volume', 'skin_id'];
 
-    public function historicSales(): HasMany {
-        return $this->hasMany(HistoricSale::class);
+    public function skin(): BelongsTo {
+        return $this->belongsTo(Skin::class);
     }
-
 }
