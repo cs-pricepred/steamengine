@@ -12,7 +12,7 @@ class HistoricSale extends Model
     use HasFactory;
     use HasUuids;
 
-    protected $fillable = ['time', 'price', 'volume', 'skin_id'];
+    protected $fillable = ['time', 'price', 'volume', 'item_id'];
 
     public function skin(): BelongsTo {
         return $this->belongsTo(Skin::class);

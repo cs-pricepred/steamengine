@@ -16,7 +16,7 @@ return new class extends Migration
             $table->dateTime('time');
             $table->float('price', 8, 3);
             $table->bigInteger('volume');
-            $table->foreignUuid('skin_id');
+            $table->foreignUuid('item_id');
             $table->timestamps();
         });
     }

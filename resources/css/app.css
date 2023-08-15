@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+    font-family: "Disket Mono";
+    font-weight: 500;
+    src: url("/public/fonts/Disket-Mono-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Disket Mono";
+    font-weight: 700;
+    src: url("/public/fonts/Disket-Mono-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Insturment Sans";
+    font-weight: 500;
+    src: url("/public/fonts/InstrumentSans.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "General Gothic";
+    src: url("/public/fonts/GeneralGothicVF.woff2") format("woff2"),
+        url("/public/fonts/GeneralGothicVF.woff") format("woff");
+}
+
+html,
+body {
+    height: 100%;
+}

@@ -15,14 +15,14 @@ class FetchSaleHistory extends Command
      *
      * @var string
      */
-    protected $signature = 'app:fetch-sale-history {skin_id?}';
+    protected $signature = 'app:fetch-sale-history {item_id?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fetch sale history for all skins, or skin_id';
+    protected $description = 'Fetch sale history for all skins, or item_id';
 
     private SteamApi $api;
 
@@ -37,9 +37,9 @@ class FetchSaleHistory extends Command
      */
     public function handle(): void {
 
-        if ($skin_id = $this->argument('skin_id')) {
+        if ($item_id = $this->argument('item_id')) {
             $this->info('starting to fetch single');
-            $this->fetchSingleWithId($skin_id);
+            $this->fetchSingleWithId($item_id);
         } else {
             $this->info('starting to fetch all');
             $skins = Skin::all();
@@ -66,7 +66,7 @@ class FetchSaleHistory extends Command
         if (!is_array($historicSales)) return false;
 
         foreach($historicSales as $s) {
-            $historicSale = HistoricSale::firstOrCreate(['skin_id' => $skin->id, 'time' => $s['time']], [...$s, 'skin_id' => $skin->id]);
+            $historicSale = HistoricSale::firstOrCreate(['item_id' => $skin->id, 'time' => $s['time']], [...$s, 'item_id' => $skin->id]);
         }
 
         return true;
@@ -75,8 +75,8 @@ class FetchSaleHistory extends Command
     /**
      * @return bool
      */
-    private function fetchSingleWithId(string $skin_id) : bool {
-        $skin = Skin::find($skin_id);
+    private function fetchSingleWithId(string $item_id) : bool {
+        $skin = Skin::find($item_id);
         return $this->fetchSingle($skin);
     }
 }

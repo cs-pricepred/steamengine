@@ -18,7 +18,7 @@ class Skin extends Model
     }
 
     public function historicSales(): HasMany {
-        return $this->hasMany(HistoricSale::class);
+        return $this->hasMany(HistoricSale::class, 'item_id');
     }
 
 }

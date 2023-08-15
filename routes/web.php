@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\WeaponController;
+use App\Http\Controllers\WeaponCaseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,6 +37,10 @@ Route::get('/weapons', function() {
 Route::resource('weapons', WeaponController::class);
 
 Route::resource('skins', SkinController::class);
+
+Route::resource('cases', WeaponCaseController::class)->parameters([
+    'cases' => 'name',
+]);
 
 /* Route::get('/skin/{market_hash_name}', SkinController::class); */
 
