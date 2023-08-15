@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('weapons.index')" :active="request()->routeIs('weapons.index')">
                         {{ __('Weapons') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('skins.index')" :active="request()->routeIs('skins.index')">
+                        {{ __('Skins') }}
+                    </x-nav-link>
                 </div>
             </div>
 

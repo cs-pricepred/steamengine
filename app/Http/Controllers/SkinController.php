@@ -13,6 +13,9 @@ use SteamApi\Configs\Apps;
 use SteamApi\SteamApi;
 
 class SkinController extends Controller {
+    public function index() {
+        return view('skins.index', ['skins' => Skin::all()]);
+    }
     /**
      * @return array
      */
