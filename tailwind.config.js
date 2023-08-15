@@ -18,7 +18,7 @@ export default {
             },
         },
         backgroundImage: {
-            texture: "url('/public/images/TEXTURE 34.jpg')",
+            texture: "url('/public/images/TEXTURE 34.webp')",
         },
     },
 
