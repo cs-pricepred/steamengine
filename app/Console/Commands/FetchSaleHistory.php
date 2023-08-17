@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Skin;
 use App\Models\HistoricSale;
+use Illuminate\Support\Facades\Log;
 use SteamApi\Configs\Apps;
 use SteamApi\SteamApi;
 
@@ -36,6 +37,7 @@ class FetchSaleHistory extends Command
      * @return void
      */
     public function handle(): void {
+        Log::info('Command: FetchSaleHistory');
 
         if ($item_id = $this->argument('item_id')) {
             $this->info('starting to fetch single');
@@ -58,12 +60,16 @@ class FetchSaleHistory extends Command
      * @return bool
      */
     private function fetchSingle(Skin $skin): bool {
+        Log::info('fetching '. $skin->name);
 
         $market_hash_name = $skin->weapon->name . ' | ' . $skin->name . ' (' . $skin->wear . ')';
 
         $historicSales = $this->api->getSaleHistory(Apps::CSGO_ID, ['market_hash_name' => $market_hash_name]);
 
-        if (!is_array($historicSales)) return false;
+        if (!is_array($historicSales)) {
+            Log::error('failed to fetch'. $skin->name);
+            return false;
+        }
 
         foreach($historicSales as $s) {
             $historicSale = HistoricSale::firstOrCreate(['item_id' => $skin->id, 'time' => $s['time']], [...$s, 'item_id' => $skin->id]);
