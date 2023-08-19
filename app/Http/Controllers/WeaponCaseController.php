@@ -11,7 +11,7 @@ class WeaponCaseController extends Controller
      * Display a listing of the resource.
      */
     public function index() {
-        $cases = WeaponCase::all();
+        $cases = WeaponCase::all()->sortBy('name');
 
         return view('weaponcases.index', ['cases' => $cases]);
     }

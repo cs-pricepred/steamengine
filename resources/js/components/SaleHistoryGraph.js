@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (saleHistory == "undefined") return;
 
     saleHistory = saleHistory.map((s) => {
-        s.time = new Date(s.time * 1000);
+        s.time = new Date(s.time);
         return s;
     });
 
