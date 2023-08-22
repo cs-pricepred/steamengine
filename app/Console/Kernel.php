@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command(FetchCaseSaleHistory::class)->dailyAt('05:00');
+        $schedule->command(FetchCaseSaleHistory::class)->everyFourHours();
         $schedule->command(FetchSaleHistory::class)->dailyAt('06:00');
     }
 

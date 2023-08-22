@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Models\WeaponCase;
 use App\Models\HistoricSale;
@@ -43,9 +44,9 @@ class FetchCaseSaleHistory extends Command
             $this->info('starting to fetch single');
             $this->fetchSingleWithId($item_id);
         } else {
-            $this->info('starting to fetch all');
-            Log::info('starting to fetch all');
-            $items = WeaponCase::all();
+            $this->info('starting to fetching oldest');
+            Log::info('starting to fetch oldest');
+            $items = WeaponCase::oldest('fetched_at')->limit(10)->get();
             $bar = $this->output->createProgressBar(count($items));
 
             foreach($items as $item) {
@@ -61,6 +62,7 @@ class FetchCaseSaleHistory extends Command
      * @return bool
      */
     private function fetchSingle(WeaponCase $item): bool {
+        $this->info('fetching '. $item);
         Log::info('fetching '. $item->name);
         $historicSales = $this->api->getSaleHistory(Apps::CSGO_ID, ['market_hash_name' => $item->name]);
 
@@ -73,6 +75,9 @@ class FetchCaseSaleHistory extends Command
         foreach($historicSales as $s) {
             $historicSale = HistoricSale::firstOrCreate(['item_id' => $item->id, 'time' => $s['time']], [...$s, 'item_id' => $item->id]);
         }
+
+        $item->fetched_at =  Carbon::now()->toDateTimeString();
+        $item->save();
 
         return true;
     }

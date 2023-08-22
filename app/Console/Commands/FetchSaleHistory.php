@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use App\Models\Skin;
 use App\Models\HistoricSale;
@@ -43,8 +44,9 @@ class FetchSaleHistory extends Command
             $this->info('starting to fetch single');
             $this->fetchSingleWithId($item_id);
         } else {
-            $this->info('starting to fetch all');
-            $skins = Skin::all();
+            $this->info('starting to fetch oldest');
+            Log::info('starting to fetch oldest');
+            $skins = Skin::oldest('fetched_at')->limit(10)->get();
             $bar = $this->output->createProgressBar(count($skins));
 
             foreach($skins as $skin) {
@@ -74,6 +76,9 @@ class FetchSaleHistory extends Command
         foreach($historicSales as $s) {
             $historicSale = HistoricSale::firstOrCreate(['item_id' => $skin->id, 'time' => $s['time']], [...$s, 'item_id' => $skin->id]);
         }
+
+        $skin->fetched_at =  Carbon::now()->toDateTimeString();
+        $skin->save();
 
         return true;
     }
