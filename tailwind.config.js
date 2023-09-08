@@ -19,6 +19,7 @@ export default {
         },
         backgroundImage: {
             texture: "url('/public/images/TEXTURE 34.webp')",
+            infernob: "url('/public/images/inferno_b_dither_small_1.avif')",
         },
     },
 

@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\WeaponCase;
+use App\Models\Item;
 use SteamApi\Configs\Apps;
 use SteamApi\SteamApi;
 
@@ -76,8 +76,7 @@ class SearchCases extends Command
         if (!is_array($items)) return false;
 
         foreach($items as $c) {
-            dump($c['name']);
-            $weaponCase = WeaponCase::firstOrCreate(['name' => $c['name']], ['name' => $c['name']]);
+            $weaponCase = Item::firstOrCreate(['name' => $c['name']], ['name' => $c['name']]);
         }
 
         return true;

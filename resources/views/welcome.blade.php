@@ -9,8 +9,8 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
 
-    <body class="antialiased bg-stone-100 dark:bg-stone-900 w-full h-full font-display text-stone-700 dark:text-stone-300">
-        <div class="absolute top-0 left-0 right-0 bottom-0 bg-texture bg-cover opacity-40 mix-blend-hard-light -z-10"></div>
+    <body class="antialiased bg-neutral-900 w-full h-full font-display text-neutral-100">
+        <div class="absolute top-0 left-0 right-0 bottom-0 bg-infernob bg-cover opacity-60 mix-blend-hard-light -z-10"></div>
         <div class="absolute top-4 right-8">
             @if (Route::has('login'))
                 <div class="flex gap-8">

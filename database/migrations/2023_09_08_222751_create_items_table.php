@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('historic_sales', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->uuid('id');
-            $table->date('time');
-            $table->float('price', 8, 3);
-            $table->bigInteger('volume');
-            $table->foreignUuid('item_id');
+            $table->string('name')->unique();
+            $table->bigInteger('steam_item_id')->nullable();
             $table->timestamps();
+            $table->dateTime('fetched_at')->nullable();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('historic_sales');
+        Schema::dropIfExists('items');
     }
 };

@@ -4,27 +4,27 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Models\Skin;
-use App\Models\HistoricSale;
 use Illuminate\Support\Facades\Log;
+use App\Models\Item;
+use App\Models\HistoricSale;
 use SteamApi\Configs\Apps;
 use SteamApi\SteamApi;
 
-class FetchSaleHistory extends Command
+class FetchItemSaleHistory extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:fetch-sale-history {item_id?}';
+    protected $signature = 'app:fetch-item-sale-history {item_id?}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fetch sale history for all skins, or item_id';
+    protected $description = 'Fetch sale history for all cases, or item_id';
 
     private SteamApi $api;
 
@@ -37,8 +37,8 @@ class FetchSaleHistory extends Command
      * Execute the console command.
      * @return void
      */
-    public function handle(): void {
-        Log::info('Command: FetchSaleHistory');
+    public function handle() {
+        Log::info('Command: FetchItemSaleHistory');
 
         if ($item_id = $this->argument('item_id')) {
             $this->info('starting to fetch single');
@@ -46,11 +46,11 @@ class FetchSaleHistory extends Command
         } else {
             $this->info('starting to fetch oldest');
             Log::info('starting to fetch oldest');
-            $skins = Skin::oldest('fetched_at')->limit(10)->get();
-            $bar = $this->output->createProgressBar(count($skins));
+            $items = Item::oldest('fetched_at')->limit(10)->get();
+            $bar = $this->output->createProgressBar(count($items));
 
-            foreach($skins as $skin) {
-                $this->fetchSingle($skin);
+            foreach($items as $item) {
+                $this->fetchSingle($item);
                 $bar->advance();
             }
 
@@ -61,25 +61,30 @@ class FetchSaleHistory extends Command
     /**
      * @return bool
      */
-    private function fetchSingle(Skin $skin): bool {
-        Log::info('fetching '. $skin->name);
-
-        $market_hash_name = $skin->weapon->name . ' | ' . $skin->name . ' (' . $skin->wear . ')';
-
-        $historicSales = $this->api->getSaleHistory(Apps::CSGO_ID, ['market_hash_name' => $market_hash_name]);
+    private function fetchSingle(Item $item): bool {
+        $this->info('fetching '. $item);
+        Log::info('fetching '. $item->name);
+        $historicSales = $this->api->getSaleHistory(Apps::CSGO_ID, ['market_hash_name' => $item->name]);
 
         if (!is_array($historicSales)) {
-            Log::error('failed to fetch'. $skin->name);
+            dump($historicSales);
+            Log::error('failed to fetch'. $item->name);
             return false;
         }
 
         foreach($historicSales as $s) {
             $s['time'] = Carbon::parse($s['time'])->toDateString();
-            $historicSale = HistoricSale::firstOrCreate(['item_id' => $skin->id, 'time' => $s['time']], [...$s, 'item_id' => $skin->id]);
+            $historicSale = HistoricSale::firstOrCreate([
+                'item_id' => $item->id,
+                'time' => $s['time']
+            ], [
+                ...$s,
+                'item_id' => $item->id
+            ]);
         }
 
-        $skin->fetched_at =  Carbon::now()->toDateTimeString();
-        $skin->save();
+        $item->fetched_at =  Carbon::now()->toDateTimeString();
+        $item->save();
 
         return true;
     }
@@ -88,7 +93,7 @@ class FetchSaleHistory extends Command
      * @return bool
      */
     private function fetchSingleWithId(string $item_id) : bool {
-        $skin = Skin::find($item_id);
-        return $this->fetchSingle($skin);
+        $item = Item::find($item_id);
+        return $this->fetchSingle($item);
     }
 }
