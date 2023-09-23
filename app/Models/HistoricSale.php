@@ -17,12 +17,12 @@ class HistoricSale extends Model
     protected $fillable = ['time', 'price', 'volume', 'item_id'];
 
     public function skin(): BelongsTo {
-        return $this->belongsTo(Skin::class);
+        return $this->belongsTo(Item::class);
     }
 
-    public function time(): Attribute {
-        return Attribute::make(
-            get: fn(string $value) => Carbon::createFromTimestampUTC($value)->toDateString(),
-        );
-    }
+    /* public function time(): Attribute { */
+    /*     return Attribute::make( */
+    /*         get: fn(string $value) => Carbon::createFromTimestampUTC($value)->toDateString(), */
+    /*     ); */
+    /* } */
 }

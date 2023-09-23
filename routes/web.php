@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SkinController;
 use App\Http\Controllers\WeaponController;
@@ -31,15 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/weapons', function() {
-})->name('weapons');
-
-Route::resource('weapons', WeaponController::class);
-
-Route::resource('skins', SkinController::class);
-
-Route::resource('cases', WeaponCaseController::class)->parameters([
-    'cases' => 'name',
+Route::resource('items', ItemController::class)->parameters([
+    'items' => 'name',
 ]);
 
 /* Route::get('/skin/{market_hash_name}', SkinController::class); */

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\View;
+use Illuminate\Contracts\View\View;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -12,8 +12,8 @@ class ItemController extends Controller
      * Display a listing of the resource.
      */
     public function index() : View {
-        $cases = Item::all()->sortBy('name');
-        return view('weaponcases.index', ['cases' => $cases]);
+        $items = Item::all()->sortBy('name');
+        return view('items.index', ['items' => $items]);
     }
 
     /**
@@ -34,11 +34,11 @@ class ItemController extends Controller
      * Display the specified resource.
      */
     public function show(string $name) {
-        $case = Item::firstWhere('name', $name);
+        $item = Item::firstWhere('name', $name);
 
-        return view('weaponcases.single', [
-            'case' => $case,
-            'saleHistory' => $case->historicSales()->get(),
+        return view('items.single', [
+            'item' => $item,
+            'saleHistory' => $item->historicSales()->get(),
         ]);
     }
 

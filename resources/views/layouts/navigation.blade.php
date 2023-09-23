@@ -1,28 +1,22 @@
-<nav x-data="{ open: false }" class="bg-stone-100 dark:bg-stone-900 border-b border-stone-300 dark:border-stone-700">
+<nav x-data="{ open: false }" class="sticky top-0 bg-black text-white border-b border-white">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="/" class="font-display font-bold text-lg text-stone-500">
+                    <a href="/" class="font-display font-bold text-lg">
                         <x-application-logo/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex font-display">
+                <div class="flex items-center ml-8 gap-8 font-display">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('weapons.index')" :active="request()->routeIs('weapons.index')">
-                        {{ __('Weapons') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('skins.index')" :active="request()->routeIs('skins.index')">
-                        {{ __('Skins') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('cases.index')" :active="request()->routeIs('cases.index')">
-                        {{ __('Cases') }}
+                    <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
+                        {{ __('Items') }}
                     </x-nav-link>
                 </div>
             </div>
