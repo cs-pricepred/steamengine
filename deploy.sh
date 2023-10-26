@@ -21,9 +21,6 @@ echo "Deploying application ..."
     # Migrate database
     php artisan migrate --force
 
-    # start schedule worker
-    php artisan schedule:work
-
     # Clear cache
     php artisan optimize
 
