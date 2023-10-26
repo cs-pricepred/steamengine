@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "Deploying application ..."
 
 # Enter maintenance mode
-(php artisan down --message 'The app is being currently updated. Please try again in a minute.') || true
+(php artisan down) || true
     # Update codebase
     git fetch origin main
     git reset --hard origin/main
