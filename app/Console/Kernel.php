@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\FetchCaseSaleHistory;
+use App\Console\Commands\FetchItemSaleHistory;
 use App\Console\Commands\FetchSaleHistory;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
